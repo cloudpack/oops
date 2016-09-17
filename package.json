@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "vue": "^1.0.26",
+    "vue-resource": "^1.0.2"
+  }
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="SoapTest">
+    <message name="getPage">
+        <part name="id" type="xsd:int" />
+    </message>
+    <message name="getPageResponse">
+        <part name="ResultSet" type="xsd:string" />
+    </message>
+    <portType name="SoapTestPortType">
+        <operation name="testProc">
+            <input message="typens:getPage" />
+            <output message="typens:getPageResponse" />
+        </operation>
+    </portType>
+    <service name="SoapTestService">
+        <port name="SoapTestPort" binding="typens:SoapTestBinding">
+            <soap:address location="http://XXXX/test.php" />
+        </port>
+    </service>
+</definitions>

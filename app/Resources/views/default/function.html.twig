@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <div id="welcome">
+                <h1><span>Welcome to</span>Oops!!</h1>
+            </div>
+            <div id="status">
+                <p>
+                    Oops is sugoi benri na SOAP client no function page.
+                </p>
+                {{ form_start(form) }}
+                <p>
+                    {{ form_label(form.function) }}
+                    {{ form_widget(form.function) }}
+                </p>
+                <p>
+                    {{ form_label(form.arg) }}
+                    {{ form_widget(form.arg) }}
+                </p>
+                <p>
+                    {{ form_widget(form.request) }}
+                </p>
+                {{ form_end(form) }}
+            </div>
+            <div id="result">
+                <p>
+                    <textarea>
+                        {{ result }}
+                    </textarea>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
