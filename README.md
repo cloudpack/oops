@@ -12,7 +12,22 @@ git clone https://github.com/cloudpack/oops
 
 Install PHP Packages
 ```
-composer install
+cd path/to/oops
+php composer.phar install
+```
+To enter a blank to all parameters.
+```
+Some parameters are missing. Please provide them.
+database_host (127.0.0.1):
+database_port (null):
+database_name (symfony):
+database_user (root):
+database_password (null):
+mailer_transport (smtp):
+mailer_host (127.0.0.1):
+mailer_user (null):
+mailer_password (null):
+secret (ThisTokenIsNotSoSecretChangeIt):
 ```
 
 Install Node Modules
@@ -30,17 +45,17 @@ Run Server
 php bin/console server:run
 ```
 
+## Usage
+
 Access WebSite
 ```
 http://127.0.0.1:8000
 ```
 
-## Usage
-
-1. Upload `.wsdl` file.
-2. Set parameters.  
+2. Upload `.wsdl` file.
+3. Set parameters.  
    eg) SOAP version, headers, args...
-3. When you click `request` button, then it will be sent.
+4. When you click `request` button, then it will be sent.
 
 
 ## Notice
