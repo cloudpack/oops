@@ -87,7 +87,7 @@ class DefaultController extends Controller
      */
     private function saveFile($file)
     {
-        $name = md5(uniqid()) . '.wsdl';
+        $name = $file->getClientOriginalName();
         $file->move($this->getStoragePath(), $name);
 
         return $name;
