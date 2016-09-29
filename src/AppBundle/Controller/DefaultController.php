@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Service\SoapService;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DefaultController extends Controller
 {
@@ -69,15 +70,17 @@ class DefaultController extends Controller
         $Service = new SoapService($this->getStoragePath($params['name']), $params);
 
         try {
+            $Service->call();
+
             return $this->json([
                 'code' => 200,
-                'result' => $Service->call(),
+                'result' => $Service->getLastResponse(),
             ]);
         } catch (\SoapFault $fault) {
             return $this->json([
                 'code' => $fault->getCode(),
                 'result' => $fault->getMessage(),
-            ]);
+            ], 500);
         }
     }
 

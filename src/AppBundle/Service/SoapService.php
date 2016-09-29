@@ -10,7 +10,9 @@ class SoapService
 
     public function __construct($uri, array $param = [])
     {
-        $option = [];
+        $option = [
+            'trace' => 1,
+        ];
         if (!empty($param['version'])) {
             if ($param['version'] == '1.2') {
                 $option['soap_version'] = SOAP_1_2;
@@ -35,6 +37,14 @@ class SoapService
         } catch (\SoapFault $fault) {
             throw $fault;
         }
+    }
+
+    public function getLastResponse()
+    {
+        return [
+            'header' => $this->client->__getLastRequestHeaders(),
+            'body' => $this->client->__getLastResponse(),
+        ];
     }
 
     private function addHeaders($headers)
