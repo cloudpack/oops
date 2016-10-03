@@ -9,26 +9,14 @@
             <div id="status">
                 <p>
                     Oops is sugoi benri na SOAP client no function page.
+                    Sono result.
                 </p>
-                {{ form_start(form) }}
-                <p>
-                    {{ form_label(form.function) }}
-                    {{ form_widget(form.function) }}
-                </p>
-                <p>
-                    {{ form_label(form.arg) }}
-                    {{ form_widget(form.arg) }}
-                </p>
-                <p>
-                    {{ form_widget(form.request) }}
-                </p>
-                {{ form_end(form) }}
             </div>
             <div id="result">
                 <p>
-                    <textarea>
+                    <pre>
                         {{ result }}
-                    </textarea>
+                    </pre>
                 </p>
             </div>
         </div>

@@ -31,11 +31,24 @@ class SoapService
     public function call()
     {
         try {
-            $arg = $this->param['argType'] == 'object' ? $this->param['object'] : $this->param['array'];
+            $arg = $this->buildArgs();
 
             return $this->client->__soapCall($this->param['function'], $arg);
         } catch (\SoapFault $fault) {
             throw $fault;
+        }
+    }
+
+    private function buildArgs()
+    {
+        if ($this->param['arg'] == 'object') {
+            $obj = [];
+            foreach ($this->param['object']['key'] as $index => $key) {
+                $obj[$key] = $this->param['object']['value'][$index];
+            }
+            return $obj;
+        } else {
+            return $this->param['array'];
         }
     }
 
@@ -50,11 +63,11 @@ class SoapService
     private function addHeaders($headers)
     {
         $SoapHeaders = [];
-        foreach ($headers as $header) {
+        foreach ($headers['namespace'] as $index => $namespace) {
             $SoapHeaders[] = new \SoapHeader(
-                $header['namespace'],
-                $header['key'],
-                $header['value']
+                $namespace,
+                $headers['key'][$index],
+                $headers['value'][$index]
             );
         }
 
@@ -70,7 +83,7 @@ class SoapService
                 $functions[] = $this->parseFunction($function);
             }
         }
-
+        sort($functions);
         return $functions;
     }
 

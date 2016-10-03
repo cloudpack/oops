@@ -61,27 +61,24 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/request", name="function")
+     * @Route("/request", name="request")
      * @Method({"POST"})
      */
     public function requestAction(Request $request)
     {
-        $params = json_decode($request->getContent(), true);
-        $Service = new SoapService($this->getStoragePath($params['name']), $params);
+        $Service = new SoapService($this->getStoragePath($request->request->get('name')), $request->request->all());
 
         try {
             $Service->call();
 
-            return $this->json([
-                'code' => 200,
-                'result' => $Service->getLastResponse(),
-            ]);
+            $result = $Service->getLastResponse();
         } catch (\SoapFault $fault) {
-            return $this->json([
-                'code' => $fault->getCode(),
-                'result' => $fault->getMessage(),
-            ], 500);
+            $result = $fault->getMessage();
         }
+
+        return $this->render('default/result.html.twig', [
+            'result' => $result,
+        ]);
     }
 
     /**

@@ -15,61 +15,63 @@
                 </form>
 
                 <div v-if="isUploaded">
-                    <input type="hidden" name="name" v-model="name">
+                    <form action="{{ url('request') }}" target="_blank" method="post">
+                        <input type="hidden" name="name" v-model="soap.name">
 
-                    <div>
-                        <label>function</label>
-                        <select v-model="soap.function">
-                            <option v-for="function in functions" track-by="$index">${ function }</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label>version</label>
-                        <select v-model="soap.version">
-                            <option v-for="ver in version">${ ver }</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label>headers</label>
-                        <button v-on:click="addHeader">add</button>
-                        <div v-for="header in soap.header" track-by="$index">
-                            <input type="text" v-model="header.namespace">
-                            <input type="text" v-model="header.key">
-                            <input type="text" v-model="header.value">
-                            <button v-on:click="removeHeader($index)">remove</button>
+                        <div>
+                            <label>function</label>
+                            <select name="function" v-model="soap.function">
+                                <option v-for="function in functions" track-by="$index">${ function }</option>
+                            </select>
                         </div>
-                    </div>
 
-                    <div>
-                        <label>arg type</label>
-                        <select v-model="soap.arg">
-                            <option></option>
-                            <option v-for="arg in argType">${ arg }</option>
-                        </select>
-                    </div>
-
-                    <div v-if="soap.arg == 'array'">
-                        <button v-on:click="addArray">add</button>
-                        <div v-for="array in soap.array" track-by="$index">
-                            <input type="text" v-model="array">
-                            <button v-on:click="removeArray($index)">remove</button>
+                        <div>
+                            <label>version</label>
+                            <select name="version" v-model="soap.version">
+                                <option v-for="ver in version">${ ver }</option>
+                            </select>
                         </div>
-                    </div>
 
-                    <div v-if="soap.arg == 'object'">
-                        <button v-on:click="addObject">add</button>
-                        <div v-for="object in soap.object" track-by="$index">
-                            <input type="text" v-model="object.key">
-                            <input type="text" v-model="object.value">
-                            <button v-on:click="removeObject($index)">remove</button>
+                        <div>
+                            <label>headers</label>
+                            <button type="button" v-on:click="addHeader">add</button>
+                            <div v-for="header in soap.header" track-by="$index">
+                                <input type="text" name="header[namespace][]" v-model="header.namespace">
+                                <input type="text" name="header[key][]" v-model="header.key">
+                                <input type="text" name="header[value][]" v-model="header.value">
+                                <button type="button" v-on:click="removeHeader($index)">remove</button>
+                            </div>
                         </div>
-                    </div>
 
-                    <button type="button" v-on:click="request">
-                        request
-                    </button>
+                        <div>
+                            <label>arg type</label>
+                            <select name="arg" v-model="soap.arg">
+                                <option></option>
+                                <option v-for="arg in argType">${ arg }</option>
+                            </select>
+                        </div>
+
+                        <div v-if="soap.arg == 'array'">
+                            <button type="button" v-on:click="addArray">add</button>
+                            <div v-for="array in soap.array" track-by="$index">
+                                <input name="array[]" type="text" v-model="array">
+                                <button type="button" v-on:click="removeArray($index)">remove</button>
+                            </div>
+                        </div>
+
+                        <div v-if="soap.arg == 'object'">
+                            <button type="button" v-on:click="addObject">add</button>
+                            <div v-for="object in soap.object" track-by="$index">
+                                <input name="object[key][]" type="text" v-model="object.key">
+                                <input name="object[value][]" type="text" v-model="object.value">
+                                <button type="button" v-on:click="removeObject($index)">remove</button>
+                            </div>
+                        </div>
+
+                        <button type="submit">
+                            request
+                        </button>
+                    </form>
                 </div>
 
                 <div id="result">

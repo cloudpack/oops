@@ -2,11 +2,14 @@
  * Created by shinichi on 2016/09/16.
  */
 var Vue = require("vue")
-Vue.use(require("vue-resource"))
-
 Vue.config.debug = true
 Vue.config.devtools = true
 Vue.config.delimiters = ["${", "}"]
+
+Vue.use(require("vue-resource"))
+
+var base = location.href
+Vue.http.options.root = base
 
 new Vue({
     el: "#wrapper",
@@ -75,14 +78,7 @@ new Vue({
         },
         removeObject: function (index) {
             this.soap.object.splice(index, 1)
-        },
-
-        request: function () {
-            var that = this
-            this.$http.post("/request", that.soap)
-                .then(function (response) {
-                    that.result = response.body.result
-                })
         }
+
     }
 })
